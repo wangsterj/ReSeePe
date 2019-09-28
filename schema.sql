@@ -1,14 +1,9 @@
-DROP DATABASE IF EXISTS test;
-
-CREATE DATABASE test;
-
-USE test;
+DROP TABLE IF EXISTS items;
 
 CREATE TABLE items (
-  id int NOT NULL AUTO_INCREMENT,
+  ID serial PRIMARY KEY,
   quantity integer NOT NULL,
-  description varchar(50) NOT NULL,
-  PRIMARY KEY (ID)
+  description text NOT NULL
 );
 
 /*  Execute this file from the command line by typing:

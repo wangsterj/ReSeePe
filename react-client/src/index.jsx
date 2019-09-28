@@ -1,35 +1,68 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import axios from 'axios';
 import List from './components/List.jsx';
+import RecipeList from './components/RecipeList/RecipeList.jsx';
+import SearchBar from './components/RecipeList/SearchBar.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      items: []
-    }
+    this.state = {
+      items: [],
+      recipeItems: [],
+    };
+    this.recipeQuery = this.recipeQuery.bind(this);
   }
 
   componentDidMount() {
-    $.ajax({
-      url: '/items', 
-      success: (data) => {
+    axios.get('/api/allItems')
+      .then((response) => {
         this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
+          items: response.data,
+        });
+      })
+      .catch((err) => {
         console.log('err', err);
-      }
-    });
+      });
+
+    // const { query } = this.state;
+    // const query = 'hi';
+    // axios.get(`/api/recipe-query/${query}`)
+    //   .then((response) => {
+    //     this.setState({
+    //       recipeItems: response.data,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log('err', err);
+    //   });
   }
 
-  render () {
-    return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
-    </div>)
+  recipeQuery(query) {
+    axios.get(`/api/recipe-query/${query}`)
+      .then((response) => {
+        this.setState({
+          recipeItems: response.data,
+        });
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }
+
+  render() {
+    const { items, recipeItems } = this.state;
+    return (
+      <div>
+        <h1>ReSeePe</h1>
+        <SearchBar recipeQuery={this.recipeQuery} />
+        <h4>Recipe Options</h4>
+        <RecipeList recipeItems={recipeItems} />
+        <h1>Item List</h1>
+        {/* <List items={items} /> */}
+      </div>
+    );
   }
 }
 

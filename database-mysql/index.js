@@ -1,15 +1,11 @@
-var mysql = require('mysql');
+const { Client } = require('pg');
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'FILL_ME_IN',
-  database : 'test'
-});
+const client = new Client({ database: 'reseepe' });
+client.connect();
 
-var selectAll = function(callback) {
-  connection.query('SELECT * FROM items', function(err, results, fields) {
-    if(err) {
+const selectAll = function (callback) {
+  client.query('SELECT * FROM items', (err, results, fields) => {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, results);
@@ -17,4 +13,14 @@ var selectAll = function(callback) {
   });
 };
 
-module.exports.selectAll = selectAll;
+const selectOne = function (id, callback) {
+  client.query(`SELECT * FROM items where id = ${id}`, (err, results, fields) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+module.exports = { selectAll, selectOne };
