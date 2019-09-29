@@ -4,6 +4,7 @@ import axios from 'axios';
 import List from './components/List.jsx';
 import RecipeList from './components/RecipeList/RecipeList.jsx';
 import SearchBar from './components/RecipeList/SearchBar.jsx';
+import Login from './components/Login/Login.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>ReSeePe</h1>
+        <Login />
         <SearchBar recipeQuery={this.recipeQuery} />
         <h4>Recipe Options</h4>
         <RecipeList recipeItems={recipeItems} />
