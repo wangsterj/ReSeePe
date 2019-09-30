@@ -61,6 +61,19 @@ app.get('/api/recipe-query/:query', (req, res) => {
   }]);
 });
 
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  items.validPassword(password, username, (err, isValid) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(isValid);
+  });
+});
+
+app.post('/api/signup', (req, res) => {
+});
+
 app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
