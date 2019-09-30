@@ -18,12 +18,12 @@ DROP TABLE IF EXISTS recipes;
 CREATE TABLE recipes (
   ID serial PRIMARY KEY,
   apiID int NOT NULL,
-  name text,
-  readyInMinutes text,
+  title text,
+  readyInMinutes int,
   servings int,
-  userListsID int NOT NULL
+  userID int NOT NULL
 );
-CREATE INDEX ON recipes (userListsID);
+CREATE INDEX ON recipes (userID);
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql

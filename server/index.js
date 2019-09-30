@@ -12,6 +12,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/../react-client/dist`));
 
+app.get('/api/favoriteRecipes/:userID', (req, res) => {
+  const { userID } = req.params;
+  res.send(userID);
+  // items.selectFavorites((err, data) => {
+  //   if (err) {
+  //     res.sendStatus(500);
+  //   } else {
+  //     res.send(data.rows);
+  //   }
+  // });
+});
+
+app.post('/api/favoriteRecipes', (req, res) => {
+  const { userID, recipeItem } = req.body;
+  items.addFavorite(userID, recipeItem, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+  });
+});
 
 app.get('/api/allItems', (req, res) => {
   items.selectAll((err, data) => {

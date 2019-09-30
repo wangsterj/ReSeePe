@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RecipeItem = (props) => {
-  const { recipeItem } = props;
+  const { recipeItem, favoriteHandler } = props;
   const {
     id, title, readyInMinutes, servings,
   } = recipeItem;
@@ -9,6 +9,7 @@ const RecipeItem = (props) => {
   return (
     <span>
       <div>{title}</div>
+      <img src={imgUrl} />
       <div>
         Ready in
         {' '}
@@ -21,7 +22,7 @@ const RecipeItem = (props) => {
         {' '}
         servings
       </div>
-      <img src={imgUrl} />
+      <button type="button" onClick={() => { favoriteHandler(recipeItem); }}>Favorite this Recipe!</button>
     </span>
   );
 };

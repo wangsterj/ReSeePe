@@ -4,23 +4,6 @@ const bcrypt = require('bcrypt');
 const client = new Client({ database: 'reseepe' });
 client.connect();
 
-// values: ['userid', 'password']
-const saveUser = function (password, userID, callback) {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(password, salt, (err, hash) => {
-      // Store hash in users DB.
-      client.query('INSERT INTO users (userID, password) VALUES($1, $2)', [userID, hash], (err) => {
-        if (err) {
-          console.log(err);
-          callback(null, false);
-        } else {
-          console.log('Successfully stored user');
-          callback(null, true);
-        }
-      });
-    });
-  });
-};
 
 const selectAll = function (callback) {
   client.query('SELECT * FROM items', (err, results, fields) => {
@@ -42,6 +25,49 @@ const selectOne = function (id, callback) {
   });
 };
 
+const selectFavorites = function (id, callback) {
+  client.query(`SELECT * FROM recipes WHERE userID = ${id}`, (err, results) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+const addFavorite = function (userID, recipeItem, callback) {
+  console.log(userID, recipeItem);
+  const {
+    id, title, readyInMinutes, servings,
+  } = recipeItem;
+  const query = `INSERT INTO recipes (apiID, title, readyInMinutes, servings, userID) VALUES (${id},'${title}',${readyInMinutes},${servings},${userID})`;
+  client.query(query, (err, results) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+
+// values: ['userid', 'password']
+const saveUser = function (password, userID, callback) {
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(password, salt, (err, hash) => {
+      // Store hash in users DB.
+      client.query('INSERT INTO users (userID, password) VALUES($1, $2)', [userID, hash], (err) => {
+        if (err) {
+          console.log(err);
+          callback(null, false);
+        } else {
+          console.log('Successfully stored user');
+          callback(null, true);
+        }
+      });
+    });
+  });
+};
 
 // takes in a password and compares with password saved in db based on userID
 const validPassword = function (password, user, callback) {
@@ -66,5 +92,5 @@ const validPassword = function (password, user, callback) {
 };
 
 module.exports = {
-  selectAll, selectOne, validPassword, saveUser,
+  selectAll, selectOne, validPassword, saveUser, selectFavorites, addFavorite,
 };

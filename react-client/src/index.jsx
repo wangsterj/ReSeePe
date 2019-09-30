@@ -10,38 +10,30 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
+      // items: [],
       recipeItems: [],
       loggedIn: true,
       // loggedIn: false,
       userID: 0,
+      favoriteList: [],
     };
     this.recipeQuery = this.recipeQuery.bind(this);
     this.loginHandler = this.loginHandler.bind(this);
+    this.favoriteHandler = this.favoriteHandler.bind(this);
   }
 
   componentDidMount() {
-    axios.get('/api/allItems')
+    const { userID } = this.state;
+    axios.get(`/api/favoriteRecipes/${userID}`)
       .then((response) => {
-        this.setState({
-          items: response.data,
-        });
+        console.log(response);
+        // this.setState({
+        //   favoriteList: response.data,
+        // });
       })
       .catch((err) => {
         console.log('err', err);
       });
-
-    // const { query } = this.state;
-    // const query = 'hi';
-    // axios.get(`/api/recipe-query/${query}`)
-    //   .then((response) => {
-    //     this.setState({
-    //       recipeItems: response.data,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log('err', err);
-    //   });
   }
 
   recipeQuery(query) {
@@ -54,6 +46,17 @@ class App extends React.Component {
       .catch((err) => {
         console.log('err', err);
       });
+  }
+
+  favoriteHandler(recipeItem) {
+    const { favoriteList, userID } = this.state;
+    axios.post('/api/favoriteRecipes', {
+      recipeItem,
+      userID,
+    }, () => {
+      favoriteList.push(recipeItem);
+      this.setState({ favoriteList });
+    });
   }
 
   loginHandler(userID) {
@@ -69,7 +72,7 @@ class App extends React.Component {
         <Login loginHandler={this.loginHandler} loggedIn={loggedIn} />
 
         <SearchBar recipeQuery={this.recipeQuery} loggedIn={loggedIn} />
-        <RecipeList recipeItems={recipeItems} loggedIn={loggedIn} />
+        <RecipeList recipeItems={recipeItems} loggedIn={loggedIn} favoriteHandler={this.favoriteHandler} />
 
 
         {/* <h1>Item List</h1> */}

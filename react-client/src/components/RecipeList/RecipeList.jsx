@@ -2,7 +2,7 @@ import React from 'react';
 import RecipeItem from './RecipeItem.jsx';
 
 const RecipeList = (props) => {
-  const { recipeItems, loggedIn } = props;
+  const { recipeItems, loggedIn, favoriteHandler } = props;
 
   // if not logged in, don't render!
   if (!loggedIn) {
@@ -12,7 +12,7 @@ const RecipeList = (props) => {
     <div>
       <h4>Recipe Options</h4>
       <div>
-        { recipeItems.map((recipeItem, index) => <RecipeItem recipeItem={recipeItem} key={recipeItem.id} />)}
+        { recipeItems.map((recipeItem, index) => <RecipeItem recipeItem={recipeItem} key={recipeItem.id} favoriteHandler={favoriteHandler} />)}
       </div>
     </div>
   );
