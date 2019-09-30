@@ -72,6 +72,13 @@ app.post('/api/login', (req, res) => {
 });
 
 app.post('/api/signup', (req, res) => {
+  const { username, password } = req.body;
+  items.saveUser(password, username, (err, isValid) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(isValid);
+  });
 });
 
 app.listen(3000, () => {
