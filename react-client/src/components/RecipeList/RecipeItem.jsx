@@ -7,7 +7,7 @@ const RecipeItem = (props) => {
   } = recipeItem;
   const imgUrl = `https://spoonacular.com/recipeImages/${id}-312x231.jpg`;
   return (
-    <div>
+    <span>
       <div>{title}</div>
       <div>
         Ready in
@@ -22,7 +22,7 @@ const RecipeItem = (props) => {
         servings
       </div>
       <img src={imgUrl} />
-    </div>
+    </span>
   );
 };
 

@@ -9,7 +9,11 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const { recipeQuery } = this.props;
+    const { recipeQuery, loggedIn } = this.props;
+    // if not logged in, don't render!
+    if (!loggedIn) {
+      return null;
+    }
     return (
       <div>
         <input type="text" placeholder="Search recipes..." onChange={(event) => { this.setState({ input: event.target.value }); }} />

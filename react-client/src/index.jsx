@@ -12,8 +12,12 @@ class App extends React.Component {
     this.state = {
       items: [],
       recipeItems: [],
+      loggedIn: true,
+      // loggedIn: false,
+      userID: 0,
     };
     this.recipeQuery = this.recipeQuery.bind(this);
+    this.loginHandler = this.loginHandler.bind(this);
   }
 
   componentDidMount() {
@@ -52,16 +56,23 @@ class App extends React.Component {
       });
   }
 
+  loginHandler(userID) {
+    this.setState({ loggedIn: true, userID });
+  }
+
   render() {
-    const { items, recipeItems } = this.state;
+    const { items, recipeItems, loggedIn } = this.state;
     return (
       <div>
         <h1>ReSeePe</h1>
-        <Login />
-        <SearchBar recipeQuery={this.recipeQuery} />
-        <h4>Recipe Options</h4>
-        <RecipeList recipeItems={recipeItems} />
-        <h1>Item List</h1>
+        {/* {loggedIn === 0 ? <Login loginHandler={this.loginHandler} /> : null} */}
+        <Login loginHandler={this.loginHandler} loggedIn={loggedIn} />
+
+        <SearchBar recipeQuery={this.recipeQuery} loggedIn={loggedIn} />
+        <RecipeList recipeItems={recipeItems} loggedIn={loggedIn} />
+
+
+        {/* <h1>Item List</h1> */}
         {/* <List items={items} /> */}
       </div>
     );
