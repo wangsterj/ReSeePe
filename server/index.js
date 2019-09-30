@@ -46,14 +46,6 @@ app.get('/api/recipe-query/:query', (req, res) => {
     url,
   };
 
-  // axios(options)
-  //   .then((response) => {
-  //     res.send(response.data.results);
-  //   })
-  //   .catch((err) => {
-  //     res.send(err);
-  //   });
-
   res.send([{
     id: 215435, title: 'Three-Cheese Pizza (For Cheese Lovers)', readyInMinutes: 45, servings: 8, image: 'three-cheese-pizza-for-cheese-lovers-215435.jpg', imageUrls: ['three-cheese-pizza-for-cheese-lovers-215435.jpg'],
   }, {
@@ -63,11 +55,11 @@ app.get('/api/recipe-query/:query', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  items.validPassword(password, username, (err, isValid) => {
+  items.validPassword(password, username, (err, isValid, id) => {
     if (err) {
       res.send(err);
     }
-    res.send(isValid);
+    res.send({ isValid, id });
   });
 });
 
