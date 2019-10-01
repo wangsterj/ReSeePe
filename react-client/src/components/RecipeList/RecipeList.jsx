@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import RecipeItem from './RecipeItem.jsx';
 
 const RecipeList = (props) => {
@@ -8,14 +9,25 @@ const RecipeList = (props) => {
   if (!loggedIn) {
     return null;
   }
+  let header;
+  if (recipeItems.length !== 0) {
+    header = (<H4>Recipe Search Results:</H4>);
+  }
   return (
     <div>
-      <h4>Recipe Options</h4>
+      {header}
       <div>
         { recipeItems.map((recipeItem, index) => <RecipeItem recipeItem={recipeItem} key={recipeItem.id} favoriteHandler={favoriteHandler} />)}
       </div>
     </div>
   );
 };
+
+const H4 = styled.div`
+  display: inline-block;
+  font-weight: bold;
+  padding-top: 10px;
+  margin-right: 50%;
+  `;
 
 export default RecipeList;

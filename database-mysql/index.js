@@ -39,9 +39,10 @@ const addFavorite = function (userID, recipeItem, callback) {
   const {
     id, title, readyInMinutes, servings,
   } = recipeItem;
-  const query = `INSERT INTO recipes (apiID, title, readyInMinutes, servings, userID) VALUES (${id},'${title}',${readyInMinutes},${servings},${userID})`;
-  client.query(query, (err, results) => {
+  const query = `INSERT INTO recipes (apiID, title, readyInMinutes, servings, userID) VALUES (${id},$1,${readyInMinutes},${servings},${userID})`;
+  client.query(query, [title], (err, results) => {
     if (err) {
+      console.log(err);
       callback(err, null);
     } else {
       callback(null, results);
@@ -51,6 +52,7 @@ const addFavorite = function (userID, recipeItem, callback) {
 
 const deleteFavorite = function (id, userID, callback) {
   const query = `DELETE FROM recipes WHERE userID = ${userID} AND id = ${id}`;
+  console.log(query);
   client.query(query, (err, results) => {
     if (err) {
       callback(err, null);

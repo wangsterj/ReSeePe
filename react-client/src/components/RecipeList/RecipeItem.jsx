@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 const RecipeItem = (props) => {
   const { recipeItem, favoriteHandler } = props;
@@ -7,9 +8,9 @@ const RecipeItem = (props) => {
   } = recipeItem;
   const imgUrl = `https://spoonacular.com/recipeImages/${id}-312x231.jpg`;
   return (
-    <span>
-      <div>{title}</div>
-      <img src={imgUrl} />
+    <Item>
+      <Title>{title}</Title>
+      <Img src={imgUrl} />
       <div>
         Ready in
         {' '}
@@ -17,14 +18,39 @@ const RecipeItem = (props) => {
         {' '}
         minutes
       </div>
-      <div>
+      {/* <div>
         {readyInMinutes}
         {' '}
         servings
-      </div>
+      </div> */}
       <button type="button" onClick={() => { favoriteHandler(recipeItem); }}>Favorite this Recipe!</button>
-    </span>
+    </Item>
   );
 };
+export const Title = styled.div`
+  height: 36px;
+  width: 150px;
+  text-align:center;
+  margin: auto auto;
+  padding-bottom:5px;
+`;
+
+export const Img = styled.img`
+border-radius:5px;
+  position: relative;
+  top: 30%
+  max-width: 80%;
+  overflow: hidden;
+`;
+
+export const Item = styled.div`
+  width: 300px;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 5px 0;
+  :hover {
+    background-color: #ECECEC;
+  }
+`;
 
 export default RecipeItem;

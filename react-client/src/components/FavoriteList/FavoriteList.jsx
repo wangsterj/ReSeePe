@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import FavoriteItem from './FavoriteItem.jsx';
 
 const FavoriteList = (props) => {
@@ -9,9 +10,9 @@ const FavoriteList = (props) => {
     return null;
   }
   let header;
-  if (favoriteItems.length !== 0) {
-    header = (<h4>FavoriteList</h4>);
-  }
+  // if (favoriteItems.length !== 0) {
+  header = (<H4>Favorite List:</H4>);
+  // }
   return (
     <div>
       {header}
@@ -22,4 +23,10 @@ const FavoriteList = (props) => {
   );
 };
 
+const H4 = styled.div`
+  display: inline-block;
+  font-weight: bold;
+  padding-top: 10px;
+  margin-right: 50%;
+  `;
 export default FavoriteList;

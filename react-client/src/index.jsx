@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import List from './components/List.jsx';
 import RecipeList from './components/RecipeList/RecipeList.jsx';
 import FavoriteList from './components/FavoriteList/FavoriteList.jsx';
@@ -12,8 +13,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       recipeItems: [],
-      loggedIn: true,
-      // loggedIn: false,
+      // loggedIn: true,
+      loggedIn: false,
       userID: 0,
       favoriteList: [],
     };
@@ -26,6 +27,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getFavoriteRecipes();
+    // this.recipeQuery('cookies');
   }
 
   getFavoriteRecipes() {
@@ -61,19 +63,16 @@ class App extends React.Component {
       userID,
     })
       .then((result) => {
-        console.log(result.data);
-        favoriteList.push(recipeItem);
-        this.setState({ favoriteList });
+        this.getFavoriteRecipes();
       });
   }
 
   // deletes recipe from user's favorite list and updates current list
   unfavoriteHandler(recipeItem) {
-    const { id } = recipeItem;
+    const { id, apiid } = recipeItem;
     const { userID } = this.state;
     axios.delete(`/api/favoriteRecipes/${id}/${userID}`)
       .then((response) => {
-        console.log(response.data);
         this.getFavoriteRecipes();
       });
   }
@@ -87,17 +86,44 @@ class App extends React.Component {
       recipeItems, loggedIn, favoriteList,
     } = this.state;
     return (
-      <div>
-        <h1>ReSeePe</h1>
+      <Div>
+
+        <H1>ReSeePe</H1>
+        <Text>(reh·see·pee)</Text>
+        <Desc>Visualize your favorite recipes!</Desc>
         {/* {loggedIn === 0 ? <Login loginHandler={this.loginHandler} /> : null} */}
         <Login loginHandler={this.loginHandler} loggedIn={loggedIn} />
 
         <SearchBar recipeQuery={this.recipeQuery} loggedIn={loggedIn} />
         <RecipeList recipeItems={recipeItems} loggedIn={loggedIn} favoriteHandler={this.favoriteHandler} />
         <FavoriteList favoriteItems={favoriteList} loggedIn={loggedIn} unfavoriteHandler={this.unfavoriteHandler} />
-      </div>
+      </Div>
     );
   }
 }
+
+const Desc = styled.div`
+padding-top:15px;
+padding-bottom:10px;
+`;
+
+const Div = styled.div`
+margin-top: 10px;
+font-family: 'didot';
+position: relative;
+text-align: center;
+`;
+
+const H1 = styled.div`
+  display: block;
+  font-size: 2.5em;
+  font-weight: bold;
+`;
+
+const Text = styled.div`
+  color: #969696;
+  font-style: italic;
+  font-size: .85em;
+`;
 
 ReactDOM.render(<App />, document.getElementById('app'));

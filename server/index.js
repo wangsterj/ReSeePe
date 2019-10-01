@@ -28,14 +28,14 @@ app.post('/api/favoriteRecipes', (req, res) => {
   items.addFavorite(userID, recipeItem, (err, result) => {
     if (err) {
       res.send(err);
+    } else {
+      res.send('Successfully Added!');
     }
-    res.send('Successfully Added!');
   });
 });
 
 app.delete('/api/favoriteRecipes/:id/:userID', (req, res) => {
   const { id, userID } = req.params;
-  console.log(req.params);
   items.deleteFavorite(id, userID, (err, result) => {
     if (err) {
       res.send(err);
@@ -60,7 +60,6 @@ app.get('/api/items/:id', (req, res) => {
     id = 0;
   }
   items.selectOne(id, (err, data) => {
-    console.log(data);
     if (err) {
       res.sendStatus(500);
     } else {
@@ -72,10 +71,11 @@ app.get('/api/items/:id', (req, res) => {
 app.get('/api/recipe-query/:query', (req, res) => {
   const { query } = req.params;
   const url = `https://api.spoonacular.com/recipes/search?query=${query}&number=2&apiKey=${apiKey}`;
-  const options = {
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    url,
-  };
+  // axios.get(url)
+  //   .then((response) => {
+  //     const { results } = response.data;
+  //     res.send(response.data.results);
+  //   });
 
   res.send([{
     id: 215435, title: 'Three-Cheese Pizza (For Cheese Lovers)', readyInMinutes: 45, servings: 8, image: 'three-cheese-pizza-for-cheese-lovers-215435.jpg', imageUrls: ['three-cheese-pizza-for-cheese-lovers-215435.jpg'],

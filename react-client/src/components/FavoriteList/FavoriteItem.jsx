@@ -1,10 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Title, Img, Item } from '../RecipeList/RecipeItem.jsx';
+
 
 const FavoriteItem = (props) => {
   const { favoriteItem, unfavoriteHandler } = props;
   const {
-    id, apiid, title, readyInMinutes, servings,
+    id, apiid, title, readyinminutes, servings,
   } = favoriteItem;
+  console.log(favoriteItem);
   let imgUrl;
   if (!apiid) {
     imgUrl = `https://spoonacular.com/recipeImages/${id}-312x231.jpg`;
@@ -12,23 +16,23 @@ const FavoriteItem = (props) => {
     imgUrl = `https://spoonacular.com/recipeImages/${apiid}-312x231.jpg`;
   }
   return (
-    <span>
-      <div>{title}</div>
-      <img src={imgUrl} />
+    <Item>
+      <Title>{title}</Title>
+      <Img src={imgUrl} />
       <div>
         Ready in
         {' '}
-        {readyInMinutes}
+        {readyinminutes}
         {' '}
         minutes
       </div>
-      <div>
-        {readyInMinutes}
+      {/* <div>
+        {servings}
         {' '}
         servings
-      </div>
+      </div> */}
       <button type="button" onClick={() => { unfavoriteHandler(favoriteItem); }}>un-Favorite this Recipe!</button>
-    </span>
+    </Item>
   );
 };
 

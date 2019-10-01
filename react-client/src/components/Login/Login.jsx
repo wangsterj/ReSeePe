@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 class Login extends React.Component {
   constructor(props) {
@@ -68,18 +69,28 @@ class Login extends React.Component {
     }
     return (
       <div>
+        Username:
+        {' '}
         <input type="text" placeholder="Username..." onChange={(event) => { this.setState({ username: event.target.value }); }} />
         <br />
-        <input type="text" placeholder="Password..." onChange={(event) => { this.setState({ password: event.target.value }); }} />
+        Password:
+        {' '}
+        <input type="password" placeholder="Password..." onChange={(event) => { this.setState({ password: event.target.value }); }} />
         <br />
-        <text>{signUpError ? 'Username already exists!' : (loginError ? 'Not a valid username/password combination!' : '')}</text>
+        <Error>{signUpError ? 'Username already exists!' : (loginError ? 'Not a valid username/password combination!' : '')}</Error>
         <br />
-        <button type="button" onClick={this.logIn}>Log-in</button>
-        <br />
-        <button type="button" onClick={this.signUp}>Sign-up</button>
+        <Button type="button" onClick={this.logIn}>Log-in</Button>
+        <Button type="button" onClick={this.signUp}>Sign-up</Button>
       </div>
     );
   }
 }
+const Error = styled.text`
+  color: red;
+  font-size: .85em;
+`;
+const Button = styled.button`
+  margin: 3px;
+`;
 
 export default Login;
