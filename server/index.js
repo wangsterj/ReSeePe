@@ -14,14 +14,13 @@ app.use(express.static(`${__dirname}/../react-client/dist`));
 
 app.get('/api/favoriteRecipes/:userID', (req, res) => {
   const { userID } = req.params;
-  res.send(userID);
-  // items.selectFavorites((err, data) => {
-  //   if (err) {
-  //     res.sendStatus(500);
-  //   } else {
-  //     res.send(data.rows);
-  //   }
-  // });
+  items.selectFavorites(userID, (err, data) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.send(data);
+    }
+  });
 });
 
 app.post('/api/favoriteRecipes', (req, res) => {
@@ -30,6 +29,18 @@ app.post('/api/favoriteRecipes', (req, res) => {
     if (err) {
       res.send(err);
     }
+    res.send('Successfully Added!');
+  });
+});
+
+app.delete('/api/favoriteRecipes/:id/:userID', (req, res) => {
+  const { id, userID } = req.params;
+  console.log(req.params);
+  items.deleteFavorite(id, userID, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send('Successfully Deleted!');
   });
 });
 

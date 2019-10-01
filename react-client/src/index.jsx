@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import List from './components/List.jsx';
 import RecipeList from './components/RecipeList/RecipeList.jsx';
+import FavoriteList from './components/FavoriteList/FavoriteList.jsx';
 import SearchBar from './components/RecipeList/SearchBar.jsx';
 import Login from './components/Login/Login.jsx';
 
@@ -10,7 +11,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // items: [],
       recipeItems: [],
       loggedIn: true,
       // loggedIn: false,
@@ -20,16 +20,22 @@ class App extends React.Component {
     this.recipeQuery = this.recipeQuery.bind(this);
     this.loginHandler = this.loginHandler.bind(this);
     this.favoriteHandler = this.favoriteHandler.bind(this);
+    this.getFavoriteRecipes = this.getFavoriteRecipes.bind(this);
+    this.unfavoriteHandler = this.unfavoriteHandler.bind(this);
   }
 
   componentDidMount() {
+    this.getFavoriteRecipes();
+  }
+
+  getFavoriteRecipes() {
     const { userID } = this.state;
     axios.get(`/api/favoriteRecipes/${userID}`)
       .then((response) => {
-        console.log(response);
-        // this.setState({
-        //   favoriteList: response.data,
-        // });
+        console.log(response.data);
+        this.setState({
+          favoriteList: response.data,
+        });
       })
       .catch((err) => {
         console.log('err', err);
@@ -53,10 +59,23 @@ class App extends React.Component {
     axios.post('/api/favoriteRecipes', {
       recipeItem,
       userID,
-    }, () => {
-      favoriteList.push(recipeItem);
-      this.setState({ favoriteList });
-    });
+    })
+      .then((result) => {
+        console.log(result.data);
+        favoriteList.push(recipeItem);
+        this.setState({ favoriteList });
+      });
+  }
+
+  // deletes recipe from user's favorite list and updates current list
+  unfavoriteHandler(recipeItem) {
+    const { id } = recipeItem;
+    const { userID } = this.state;
+    axios.delete(`/api/favoriteRecipes/${id}/${userID}`)
+      .then((response) => {
+        console.log(response.data);
+        this.getFavoriteRecipes();
+      });
   }
 
   loginHandler(userID) {
@@ -64,7 +83,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { items, recipeItems, loggedIn } = this.state;
+    const {
+      recipeItems, loggedIn, favoriteList,
+    } = this.state;
     return (
       <div>
         <h1>ReSeePe</h1>
@@ -73,10 +94,7 @@ class App extends React.Component {
 
         <SearchBar recipeQuery={this.recipeQuery} loggedIn={loggedIn} />
         <RecipeList recipeItems={recipeItems} loggedIn={loggedIn} favoriteHandler={this.favoriteHandler} />
-
-
-        {/* <h1>Item List</h1> */}
-        {/* <List items={items} /> */}
+        <FavoriteList favoriteItems={favoriteList} loggedIn={loggedIn} unfavoriteHandler={this.unfavoriteHandler} />
       </div>
     );
   }

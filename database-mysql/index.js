@@ -30,13 +30,12 @@ const selectFavorites = function (id, callback) {
     if (err) {
       callback(err, null);
     } else {
-      callback(null, results);
+      callback(null, results.rows);
     }
   });
 };
 
 const addFavorite = function (userID, recipeItem, callback) {
-  console.log(userID, recipeItem);
   const {
     id, title, readyInMinutes, servings,
   } = recipeItem;
@@ -50,6 +49,16 @@ const addFavorite = function (userID, recipeItem, callback) {
   });
 };
 
+const deleteFavorite = function (id, userID, callback) {
+  const query = `DELETE FROM recipes WHERE userID = ${userID} AND id = ${id}`;
+  client.query(query, (err, results) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
 
 // values: ['userid', 'password']
 const saveUser = function (password, userID, callback) {
@@ -92,5 +101,5 @@ const validPassword = function (password, user, callback) {
 };
 
 module.exports = {
-  selectAll, selectOne, validPassword, saveUser, selectFavorites, addFavorite,
+  selectAll, selectOne, validPassword, saveUser, selectFavorites, addFavorite, deleteFavorite,
 };
