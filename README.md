@@ -1,4 +1,3 @@
-reseepe-demo.gif
 # ReSeePe
 <p align='center'>
   <img src="https://github.com/wangsterj/ReSeePe/blob/master/reseepe-demo.gif" width="700px" align="center"/>
