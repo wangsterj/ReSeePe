@@ -78,7 +78,7 @@ class App extends React.Component {
   }
 
   loginHandler(userID) {
-    this.setState({ loggedIn: true, userID });
+    this.setState({ loggedIn: true, userID }, this.getFavoriteRecipes);
   }
 
   render() {
@@ -115,7 +115,8 @@ text-align: center;
 `;
 
 const H1 = styled.div`
-  display: block;
+margin-bottom: -5px;
+display: block;
   font-size: 2.5em;
   font-weight: bold;
 `;
@@ -123,7 +124,7 @@ const H1 = styled.div`
 const Text = styled.div`
   color: #969696;
   font-style: italic;
-  font-size: .85em;
+  font-size: 1em;
 `;
 
 ReactDOM.render(<App />, document.getElementById('app'));

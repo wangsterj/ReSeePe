@@ -68,7 +68,7 @@ class Login extends React.Component {
       return null;
     }
     return (
-      <div>
+      <Text>
         Username:
         {' '}
         <input type="text" placeholder="Username..." onChange={(event) => { this.setState({ username: event.target.value }); }} />
@@ -81,7 +81,7 @@ class Login extends React.Component {
         <br />
         <Button type="button" onClick={this.logIn}>Log-in</Button>
         <Button type="button" onClick={this.signUp}>Sign-up</Button>
-      </div>
+      </Text>
     );
   }
 }
@@ -91,6 +91,9 @@ const Error = styled.text`
 `;
 const Button = styled.button`
   margin: 3px;
+`;
+const Text = styled.div`
+  font-size: .8em;
 `;
 
 export default Login;

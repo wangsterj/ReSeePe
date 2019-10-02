@@ -27,6 +27,5 @@ const H4 = styled.div`
   display: inline-block;
   font-weight: bold;
   padding-top: 10px;
-  margin-right: 50%;
   `;
 export default FavoriteList;

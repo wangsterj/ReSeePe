@@ -11,7 +11,7 @@ const RecipeList = (props) => {
   }
   let header;
   if (recipeItems.length !== 0) {
-    header = (<H4>Recipe Search Results:</H4>);
+    header = (<H4>Recipe Search Results</H4>);
   }
   return (
     <div>
@@ -27,7 +27,6 @@ const H4 = styled.div`
   display: inline-block;
   font-weight: bold;
   padding-top: 10px;
-  margin-right: 50%;
   `;
 
 export default RecipeList;

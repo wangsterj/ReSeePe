@@ -70,18 +70,18 @@ app.get('/api/items/:id', (req, res) => {
 
 app.get('/api/recipe-query/:query', (req, res) => {
   const { query } = req.params;
-  const url = `https://api.spoonacular.com/recipes/search?query=${query}&number=2&apiKey=${apiKey}`;
-  // axios.get(url)
-  //   .then((response) => {
-  //     const { results } = response.data;
-  //     res.send(response.data.results);
-  //   });
+  const url = `https://api.spoonacular.com/recipes/search?query=${query}&number=4&apiKey=${apiKey}`;
+  axios.get(url)
+    .then((response) => {
+      const { results } = response.data;
+      res.send(response.data.results);
+    });
 
-  res.send([{
-    id: 215435, title: 'Three-Cheese Pizza (For Cheese Lovers)', readyInMinutes: 45, servings: 8, image: 'three-cheese-pizza-for-cheese-lovers-215435.jpg', imageUrls: ['three-cheese-pizza-for-cheese-lovers-215435.jpg'],
-  }, {
-    id: 116679, title: 'Leek & Cheese Pie', readyInMinutes: 75, servings: 4, image: 'leek-amp-cheese-pie-2-116679.jpg', imageUrls: ['leek-amp-cheese-pie-2-116679.jpg', 'leek_amp_cheese_pie-116679.jpg'],
-  }]);
+  // res.send([{
+  //   id: 215435, title: 'Three-Cheese Pizza (For Cheese Lovers)', readyInMinutes: 45, servings: 8, image: 'three-cheese-pizza-for-cheese-lovers-215435.jpg', imageUrls: ['three-cheese-pizza-for-cheese-lovers-215435.jpg'],
+  // }, {
+  //   id: 116679, title: 'Leek & Cheese Pie', readyInMinutes: 75, servings: 4, image: 'leek-amp-cheese-pie-2-116679.jpg', imageUrls: ['leek-amp-cheese-pie-2-116679.jpg', 'leek_amp_cheese_pie-116679.jpg'],
+  // }]);
 });
 
 app.post('/api/login', (req, res) => {

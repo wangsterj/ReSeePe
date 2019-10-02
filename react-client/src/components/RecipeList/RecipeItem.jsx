@@ -33,6 +33,7 @@ export const Title = styled.div`
   text-align:center;
   margin: auto auto;
   padding-bottom:5px;
+  opacity: 1;
 `;
 
 export const Img = styled.img`
@@ -41,15 +42,19 @@ border-radius:5px;
   top: 30%
   max-width: 80%;
   overflow: hidden;
+  opacity: 1;
 `;
 
 export const Item = styled.div`
+  margin: 0 5px;
   width: 300px;
   display: inline-block;
-  border-radius: 5px;
-  padding: 5px 0;
+  border-radius: 10px;
+  padding: 10px 0;
+  background-color: white;
+  opacity: .8;
   :hover {
-    background-color: #ECECEC;
+    opacity: 1;
   }
 `;
 
