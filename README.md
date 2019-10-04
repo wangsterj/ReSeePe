@@ -3,7 +3,7 @@
   <img src="https://github.com/wangsterj/ReSeePe/blob/master/reseepe-demo.gif" width="700px" align="center"/>
 </p>   
 
-With secure login, ReSeePe allows users to search for recipes using Spoontacular's API and to add specific recipes to their favorites lists.
+With secure login, ReSeePe allows users to search for recipes using Spoontacular's API and to add and remove specific recipes to their favorites lists.
 
 ## Table of Contents
 
